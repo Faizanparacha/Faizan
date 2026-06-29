@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch A Startup Simulator</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background:#121212;
+        color:white;
+        text-align:center;
+        padding:30px;
+    }
+
+    .stats{
+        background:#1e1e1e;
+        padding:20px;
+        border-radius:15px;
+        width:350px;
+        margin:auto;
+        margin-bottom:20px;
+    }
+
+    button{
+        padding:12px 20px;
+        margin:10px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:16px;
+    }
+
+    button:hover{
+        opacity:0.8;
+    }
+
+    .log{
+        margin-top:30px;
+        background:#1e1e1e;
+        padding:20px;
+        border-radius:15px;
+        max-width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        text-align:left;
+        height:250px;
+        overflow-y:auto;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🚀 Launch A Startup Simulator</h1>
+
+<div class="stats">
+    <h3>Startup Stats</h3>
+
+    <p>💰 Cash: $<span id="cash">10000</span></p>
+    <p>👥 Users: <span id="users">0</span></p>
+    <p>⭐ Reputation: <span id="reputation">50</span></p>
+    <p>📅 Month: <span id="month">1</span></p>
+</div>
+
+<div>
+    <button onclick="buildFeature()">🛠 Build Feature</button>
+    <button onclick="runAds()">📢 Run Ads</button>
+    <button onclick="hireEmployee()">👨‍💻 Hire Employee</button>
+    <button onclick="pitchInvestors()">💵 Pitch Investors</button>
+</div>
+
+<div class="log" id="log">
+    Welcome Founder! Your startup journey begins here 🚀
+</div>
+
+<script>
+
+let cash = 10000;
+let users = 0;
+let reputation = 50;
+let month = 1;
+
+function updateUI(){
+    document.getElementById("cash").innerText = cash;
+    document.getElementById("users").innerText = users;
+    document.getElementById("reputation").innerText = reputation;
+    document.getElementById("month").innerText = month;
+
+    if(cash <= 0){
+        alert("💀 Bankruptcy! Your startup failed.");
+        location.reload();
+    }
+
+    if(users >= 1000000){
+        alert("🦄 Congratulations! You built a Unicorn Startup!");
+        location.reload();
+    }
+}
+
+function addLog(message){
+    document.getElementById("log").innerHTML =
+        "<p>" + message + "</p>" +
+        document.getElementById("log").innerHTML;
+}
+
+function randomEvent(){
+
+    let random = Math.random();
+
+    if(random < 0.15){
+        users += 5000;
+        addLog("🚀 Your app went viral! +5000 users");
+    }
+
+    else if(random < 0.25){
+        cash -= 3000;
+        addLog("💥 Servers crashed! Lost $3000");
+    }
+
+    else if(random < 0.35){
+        reputation += 10;
+        addLog("⭐ Famous influencer mentioned your startup!");
+    }
+}
+
+function nextMonth(){
+    month++;
+    randomEvent();
+    updateUI();
+}
+
+function buildFeature(){
+    cash -= 1000;
+    users += Math.floor(Math.random() * 1000);
+    reputation += 2;
+
+    addLog("🛠 You built a new feature.");
+    nextMonth();
+}
+
+function runAds(){
+    cash -= 1500;
+    users += Math.floor(Math.random() * 3000);
+
+    addLog("📢 Marketing campaign launched.");
+    nextMonth();
+}
+
+function hireEmployee(){
+    cash -= 2500;
+    reputation += 5;
+
+    addLog("👨‍💻 You hired a new employee.");
+    nextMonth();
+}
+
+function pitchInvestors(){
+
+    if(Math.random() > 0.5){
+        cash += 20000;
+        addLog("💰 Investors invested $20,000!");
+    }
+    else{
+        reputation -= 5;
+        addLog("❌ Investors rejected your pitch.");
+    }
+
+    nextMonth();
+}
+
+updateUI();
+
+</script>
+
+</body>
+</html>
